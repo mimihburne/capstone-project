@@ -22,3 +22,4 @@ def validate(username):
             return False
 
 print(validate('9ikeStandish'))
+print('hello')
