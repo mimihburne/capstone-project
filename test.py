@@ -1,25 +1,20 @@
-import re
+def dirReduc(arr):
+    n = len(arr)
+    # for x, y in zip(arr, arr[1:]):
+    #     print(x, y)
+    for i in range(0, n-2):
+        if arr[i] == 'NORTH' and arr[i+1] == 'SOUTH':
+            print(arr[i:i+2])
+            #arr.pop(i:i+1)
+            next = arr.splice(i, i+2)
+            print(next)
+            #arr.pop(i+1) indices would change so i = 2 becomes i = 1 and removes third instead of second
+            #arr.remove(arr[i:i+1])
+            #arr.remove(arr[i+1])
+            # i = i-2
+            # n = n-2
+            #print(arr)
+    return arr
 
-def change_format(paragraph):
-    indices = [i.start() for i in re.finditer('-', paragraph)]
-    temp = list(paragraph)
-    for j in indices:
-        if re.search("[0-9]", temp[j-1]) != None and re.search("[0-9]", temp[j+1]) != None:
-            temp[j] ='/'
-    paragraph_new = ''.join(temp)
-    return paragraph_new
-
-#print(change_format('Please quote your policy number: 112-39-8552.'))
-
-def validate(username):
-    if len(username) >= 4: #at least 4 characters long
-        if bool(re.match("^[A-Za-z0-9_]*$", username)) == True:
-            if re.search('_{2,}', username) == None:
-                if re.search('^[A-Za-z]', username) != None:
-                    if re.search('_$', username) == None:
-                        return True
-        else:
-            return False
-
-print(validate('9ikeStandish'))
-print('hello')
+a = ["NORTH", "SOUTH", "NORTH", "SOUTH", "EAST", "WEST", "NORTH", "WEST"]
+print(dirReduc(a))
