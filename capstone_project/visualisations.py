@@ -8,22 +8,16 @@ plt.style.use(['ggplot'])
 plt.rcParams['font.family'] = 'serif'
 
 #import SQL views- would be better to connect to server instead of having to import
+overall = pd.read_csv('C:/Users/MimiHoulihan-Burne/OneDrive - JCW Resourcing/Data engineering/Capstone/overall_performance.csv')
 toys_region = pd.read_csv('C:/Users/MimiHoulihan-Burne/OneDrive - JCW Resourcing/Data engineering/Capstone/toys_region.csv')
 toothbrush_region = pd.read_csv('C:/Users/MimiHoulihan-Burne/OneDrive - JCW Resourcing/Data engineering/Capstone/toothbrush_region.csv')
 toys_agegroup = pd.read_csv('C:/Users/MimiHoulihan-Burne/OneDrive - JCW Resourcing/Data engineering/Capstone/toys_agegroup.csv')
 toothbrush_agegroup = pd.read_csv('C:/Users/MimiHoulihan-Burne/OneDrive - JCW Resourcing/Data engineering/Capstone/toothbrush_agegroup.csv')
 toys_season = pd.read_csv('C:/Users/MimiHoulihan-Burne/OneDrive - JCW Resourcing/Data engineering/Capstone/toys_season.csv')
 toothbrush_season = pd.read_csv('C:/Users/MimiHoulihan-Burne/OneDrive - JCW Resourcing/Data engineering/Capstone/toothbrush_season.csv')
-overall = pd.read_csv('C:/Users/MimiHoulihan-Burne/OneDrive - JCW Resourcing/Data engineering/Capstone/overall_performance.csv')
 CPA = pd.read_csv('C:/Users/MimiHoulihan-Burne/OneDrive - JCW Resourcing/Data engineering/Capstone/CPA.csv')
 actual_CPA = pd.read_csv('C:/Users/MimiHoulihan-Burne/OneDrive - JCW Resourcing/Data engineering/Capstone/CPA_actual.csv')
 df = pd.read_csv('C:/Users/MimiHoulihan-Burne/OneDrive - JCW Resourcing/Data engineering/Capstone/cleaned_ACME_data.csv')
-
-#CPA comparison
-combined_CPA = pd.concat([CPA, actual_CPA], axis=1)
-del combined_CPA['uk_region']
-combined_CPA = combined_CPA.fillna(0) #do something with null values that come from insufficient data
-#print(combined_CPA.head())
 
 def overall_comparison_pie():
     #pie chart displaying overall comparison of Toys and Toothbrushes bought
@@ -45,24 +39,17 @@ def region_comparison_pies():
     plt.show()
 
 def age_group_bar(): #axes, ordered
-    #combining both product types for plotting, with grouped seasons
+    #combining both product types for plotting, with grouped ages
     toothbrush_agegroup['product'] = pd.Series(['toothbrush' for x in range(len(toothbrush_agegroup.index))])
     toys_agegroup['product'] = pd.Series(['toys' for x in range(len(toys_agegroup.index))])
     toys_toothbrush_agegroup = pd.concat([toothbrush_agegroup, toys_agegroup], axis=0)
-    ''' different approach:
-    #still not working as returning 1's for the y axis instead of 'total quantity'
-    age_groups = ['18 and Under', '18-24', '25-40', '40-60', '60 and Over']
-    sns.countplot(x='age_group', y='Total_quantity', hue='product', data = toys_toothbrush_agegroup, order=age_groups)
-    plt.show()'''
 
     #bar chart displaying difference in sales of toothbrushes and toys across different age groups
-    age_groups = ['18 and Under', '18-24', '25-40', '40-60', '60 and Over']
-    plt.bar(toys_agegroup['age_group'], toys_agegroup['Total_quantity'])
-    plt.bar(toothbrush_agegroup['age_group'], toothbrush_agegroup['Total_quantity'])
+    plotdata = toys_toothbrush_agegroup.pivot_table('Total_quantity', ['age_group'], 'product')
+    plotdata.plot(kind='bar')
     plt.title('Sales of Toys and Toothbrushes by Age Group')
     plt.ylabel('Sales')
     plt.xlabel('Age Groups')
-    #plt.legend(labels=toys_toothbrush_agegroup['product'], loc=1)
     plt.savefig('age_group_bar')
     plt.show()
 
@@ -73,16 +60,29 @@ def season_bar():
     toys_toothbrush_season = pd.concat([toothbrush_season, toys_season], axis=0)
 
     #bar chart displaying difference in sales of toothbrushes and toys across different seasons
-    plt.bar(toys_season['season'], toys_season['Total_quantity'])
-    plt.bar(toothbrush_season['season'], toothbrush_season['Total_quantity'])
+    plotdata = toys_toothbrush_season.pivot_table('Total_quantity', ['season'], 'product')
+    plotdata.plot(kind='bar')
     plt.title('Sales of Toys and Toothbrushes by Season')
     plt.ylabel('Sales')
     plt.xlabel('Season')
-    #plt.legend(labels=toys_toothbrush_agegroup['product'], loc=1)
     plt.savefig('season_bar')
     plt.show()
+    #order in certain order?
+def CPA_bar():
+    # CPA comparison
+    combined_CPA = pd.concat([CPA, actual_CPA], axis=1)
+    del combined_CPA['uk_region']
+    combined_CPA = combined_CPA.fillna(0)  # do something with null values that come from insufficient data
+    print(combined_CPA.head())
+
+    plotdata = combined_CPA.pivot_table('Total_quantity', ['region'], 'product')
+    plotdata.plot(kind='bar')
+    #want: region as x axis
+    #average and expected as 2 bars
+    #cpa values as y axis
 
 #overall_comparison_pie()
 #region_comparison_pies()
-age_group_bar()
-season_bar()
+#age_group_bar()
+#season_bar()
+CPA_bar()
