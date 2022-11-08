@@ -15,5 +15,14 @@ The resulting tables were made into views and exported from MySQL back into pyth
 The average cost per acquisition found in research was compared to the average CPA in the data.
 
 **Results**
+The SQL script contains queries used to make the tables located in SQL_results. Views were created of these tables so they could be exported to csv files, to be imported to the python script for visualization. The resulting graphs are located in the figures folder. 
+
+It is difficult to draw reliable conclusions from the given data due to the size of the dataset. For example, there were zero sales in the Southern region. With a larger dataset, the relative proportions of regional sales may change to such an extent that any conclusions drawn from this small dataset may turn out to be inaccurate. This must be kept in mind when extracting insights from this data. 
+
+First, an overall comparison of the quantity of toothbrushes and toys sold showed that more toothbrushes than toys were purchased in the dataset. In turn this provides us with more information about toothbrush sales than toy sales, but also shows that it appears toothbrush sales have been more successful. The difference between number of sales and quantities of items sold must be understood; here, the data displayed is showing the number of items bought, however some sales involved more than one item. This is why there were 50 rows in the dataset, but 66 items in total displayed on the pie chart.
+
+The bar chart comparing sales of toothbrushes and toys across different age ranges shows significant differences between the two products, with toothbrush sales only occurring in age ranges 18-24 and 40-60, whereas all toy sales were by individuals aged 25-40. No sales were made to under 18s and over 60s, suggesting marketing towards these age groups has not been so successful. Regional comparison of sales between toothbrushes and toys shows that there was much success in sales of toys in the North East, but no success anywhere else, with 100% of toy sales happening here. The North East was also a good region for toothbrush sales, with 51% of overall sales, and some other sales in the North and South East. Neither product was sold in the South region. Similarly, no sales were made in the summer season, with the majority of sales occurring in the winter time, suggesting a seasonal trend. 
+
+Comparing the CPA values from the research to the actual average CPA values from the table, it can clearly be seen that the data consistently showed lower CPA values. This graph could have shown further insight using error bars to show the variation in obtained data surrounding the average values. It must be considered that the average CPA values from the research only corresponded to the month of October 2021, so may vary with time therefore not provide an accurate comparison to the data, which spans many months.
 
 **Discussion**
