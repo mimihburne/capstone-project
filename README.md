@@ -15,6 +15,7 @@ The resulting tables were made into views and exported from MySQL back into pyth
 The average cost per acquisition found in research was compared to the average CPA in the data.
 
 **Results**
+
 The SQL script contains queries used to make the tables located in SQL_results. Views were created of these tables so they could be exported to csv files, to be imported to the python script for visualization. The resulting graphs are located in the figures folder. 
 
 It is difficult to draw reliable conclusions from the given data due to the size of the dataset. For example, there were zero sales in the Southern region. With a larger dataset, the relative proportions of regional sales may change to such an extent that any conclusions drawn from this small dataset may turn out to be inaccurate. This must be kept in mind when extracting insights from this data. 
